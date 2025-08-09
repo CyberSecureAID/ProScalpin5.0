@@ -1,0 +1,151 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roiner Menendez - Fotógrafo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="profile-card">
+        <img src="/photo_2025-08-09_18-00-32.jpg" alt="Foto de Roiner Menendez" class="profile-pic" id="profile-pic-img">
+        
+        <h1 class="name" id="profile-name">Roiner Menendez</h1>
+        <p class="title" id="profile-title">FOTÓGRAFO</p>
+
+        <p class="cta" id="profile-cta">Accede a mi sitio web y mira más de mi trabajo</p>
+
+        <div id="announcements-container"></div>
+
+        <div class="social-links" id="social-links-container">
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        
+        <a href="#" class="website-link" id="profile-website">Contacto</a>
+    </main>
+
+    <div id="admin-button" class="admin-button">
+        <i class="fas fa-cog"></i>
+    </div>
+
+    <!-- Password Modal -->
+    <div id="password-modal" class="password-modal">
+        <div class="password-modal-content">
+            <button id="close-password-modal" class="close-button">&times;</button>
+            <h2>Acceso Administrativo</h2>
+            <form id="password-form">
+                <div class="form-group">
+                    <label for="password-1">Contraseña 1:</label>
+                    <input type="password" id="password-1" class="admin-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="password-2">Contraseña 2:</label>
+                    <input type="password" id="password-2" class="admin-input" required>
+                </div>
+                <button type="submit" id="password-submit-btn" class="admin-btn">Acceder</button>
+            </form>
+            <p id="password-error" class="password-error-message"></p>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="admin-panel">
+        <div class="admin-panel-content">
+            <button id="close-admin-panel" class="close-button">&times;</button>
+            <h2>Panel Administrativo</h2>
+
+            <div class="admin-section">
+                <h3>Foto de Perfil</h3>
+                <input type="file" id="image-upload" accept="image/*">
+                <img id="profile-pic-preview" class="image-preview" src="" alt="Previsualización de foto de perfil" style="display: none;">
+                <button id="revert-profile-pic-btn" class="admin-btn cancel-btn" style="margin-top: 10px;">Restablecer a predeterminado</button>
+            </div>
+
+            <div class="admin-section">
+                <h3>Textos del Perfil</h3>
+                <label for="name-input">Nombre:</label>
+                <input type="text" id="name-input" class="admin-input">
+                <label for="title-input">Título:</label>
+                <input type="text" id="title-input" class="admin-input">
+                <label for="cta-input">Llamada a la acción (CTA):</label>
+                <input type="text" id="cta-input" class="admin-input">
+                <label for="website-text-input">Texto del Botón Principal:</label>
+                <input type="text" id="website-text-input" class="admin-input">
+                <label for="website-url-input">URL del Botón Principal:</label>
+                <input type="text" id="website-url-input" class="admin-input" placeholder="https://ejemplo.com">
+            </div>
+
+            <div class="admin-section">
+                <h3>Diseño y Apariencia</h3>
+                <div class="form-group">
+                    <label for="theme-color-input">Color del Tema:</label>
+                    <input type="color" id="theme-color-input" class="admin-color-input">
+                </div>
+                 <div class="form-group slider-group">
+                    <label for="name-size-slider">Tamaño del Nombre: <span id="name-size-value"></span></label>
+                    <input type="range" id="name-size-slider" class="admin-slider" min="1.5" max="5" step="0.1">
+                </div>
+                <div class="form-group slider-group">
+                    <label for="title-size-slider">Tamaño del Título: <span id="title-size-value"></span></label>
+                    <input type="range" id="title-size-slider" class="admin-slider" min="0.5" max="2" step="0.05">
+                </div>
+                <div class="form-group slider-group">
+                    <label for="cta-size-slider">Tamaño del CTA: <span id="cta-size-value"></span></label>
+                    <input type="range" id="cta-size-slider" class="admin-slider" min="0.7" max="1.5" step="0.05">
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3>Redes Sociales</h3>
+                <div id="social-links-manager"></div>
+                <div class="add-social-form">
+                    <div class="social-form-inputs">
+                        <select id="social-icon-select" class="admin-input">
+                            <option value="fab fa-facebook-f">Facebook</option>
+                            <option value="fab fa-instagram">Instagram</option>
+                            <option value="fab fa-whatsapp">WhatsApp</option>
+                            <option value="fab fa-twitter">Twitter</option>
+                            <option value="fab fa-linkedin-in">LinkedIn</option>
+                            <option value="fab fa-tiktok">TikTok</option>
+                            <option value="fab fa-youtube">YouTube</option>
+                            <option value="fab fa-pinterest">Pinterest</option>
+                            <option value="fab fa-telegram">Telegram</option>
+                        </select>
+                        <input type="text" id="social-url-input" class="admin-input" placeholder="URL de la red social">
+                    </div>
+                    <div class="social-form-buttons">
+                        <button id="add-social-link-btn" class="admin-btn">Añadir</button>
+                        <button id="cancel-edit-social-btn" class="admin-btn cancel-btn" style="display: none;">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-section">
+                <h3>Anuncios</h3>
+                <div id="announcements-manager"></div>
+                <label for="announcement-input">Texto del Anuncio:</label>
+                <textarea id="announcement-input" class="admin-input" placeholder="Escribe un nuevo anuncio..."></textarea>
+                <label for="announcement-image-upload">Foto del Anuncio (opcional):</label>
+                <input type="file" id="announcement-image-upload" accept="image/*">
+                <img id="announcement-image-preview" class="image-preview" src="" alt="Previsualización de imagen de anuncio" style="display: none;">
+                <label for="announcement-link-input">Enlace del Anuncio (opcional):</label>
+                <input type="text" id="announcement-link-input" class="admin-input" placeholder="https://ejemplo.com">
+                <button id="add-announcement-btn" class="admin-btn">Publicar Anuncio</button>
+            </div>
+
+            <div class="admin-save-container">
+                <button id="save-changes-btn" class="admin-btn save-btn">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <footer>
+        
+    </footer>
+</body>
+</html>
