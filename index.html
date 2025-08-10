@@ -3,6 +3,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roiner Menendez - Fotógrafo</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +15,8 @@
 </head>
 <body>
     <main class="profile-card">
-        <img src="/photo_2025-08-09_18-00-32.jpg" alt="Foto de Roiner Menendez" class="profile-pic" id="profile-pic-img">
+        <!-- Imagen de perfil por defecto -->
+        <img src="images/default-profile.png" alt="Foto de Roiner Menendez" class="profile-pic" id="profile-pic-img">
         
         <h1 class="name" id="profile-name">Roiner Menendez</h1>
         <p class="title" id="profile-title">FOTÓGRAFO</p>
@@ -40,12 +45,12 @@
             <h2>Acceso Administrativo</h2>
             <form id="password-form">
                 <div class="form-group">
-                    <label for="password-1">Contraseña 1:</label>
-                    <input type="password" id="password-1" class="admin-input" required>
+                    <label for="email-input">Correo:</label>
+                    <input type="email" id="email-input" class="admin-input" required>
                 </div>
                 <div class="form-group">
-                    <label for="password-2">Contraseña 2:</label>
-                    <input type="password" id="password-2" class="admin-input" required>
+                    <label for="password-1">Contraseña:</label>
+                    <input type="password" id="password-1" class="admin-input" required>
                 </div>
                 <button type="submit" id="password-submit-btn" class="admin-btn">Acceder</button>
             </form>

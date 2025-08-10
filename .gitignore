@@ -1,0 +1,104 @@
+########################################
+# 🗑 ARCHIVOS DE COMPILADOR Y DEPLOY    #
+########################################
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+dist/   
+build/
+out/    
+.vuepress/dist/         
+
+########################################
+# 🗑 ARCHIVOS DE TEST                   #
+#######################################
+readme.dm
+.env
+accessControl.js
+supabase.js
+app copy.js
+/ProScalpin5.0 2
+/public
+/txt
+.DS_Store
+
+########################################
+# 🧱 ARCHIVOS DE CONSTRUCCIÓN Y DEPLOY #
+########################################
+dist/
+build/
+out/
+*.zip
+*.tar.gz
+
+########################################
+# 📦 DEPENDENCIAS Y MÓDULOS EXTERNOS   #
+########################################
+node_modules/
+.env
+.env.local
+.env.*.local
+
+########################################
+# 🧪 LOGS Y ARCHIVOS TEMPORALES        #
+########################################
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+*.thumbs.db
+
+########################################
+# 🧪 ARCHIVOS DE PRUEBA Y MOCKS        #
+########################################
+__tests__/
+__mocks__/
+coverage/
+test-results/
+
+########################################
+# 🧠 CONFIGURACIONES LOCALES           #
+########################################
+.vscode/
+.idea/
+*.code-workspace
+
+########################################
+# 🔐 CLAVES Y ARCHIVOS SENSIBLES       #
+########################################
+supabase/.temp/
+supabase/.output/
+supabase/config.local.json
+supabase/keys/
+supabase/secrets/
+
+########################################
+# 🗂️ ARCHIVOS DE SISTEMA Y METADATOS   #
+########################################
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+########################################
+# 🧾 DOCUMENTACIÓN GENERADA AUTOMÁTICA #
+########################################
+docs/generated/
+*.pdf
+*.docx
+
+########################################
+# 🧪 ARCHIVOS DE COMMIT TEMPORAL       #
+########################################
+*.orig
+*.rej
+
+########################################
+# 🧩 ARCHIVOS DE TRAZABILIDAD MANUAL   #
+# (puedes descomentar si usas estos)  #
+########################################
+# commits/
+# changelog/
+
