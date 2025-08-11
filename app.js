@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const defaultData = {
         profilePic: 'images/default-profile.png',
         name: 'Roiner Menendez',
-        title: 'FOTÓGRAFO',
+        title: 'PROSCALPIN 5.0',
         cta: 'Accede a mi sitio web y mira más de mi trabajo',
         websiteText: 'Contacto',
         websiteUrl: '#',

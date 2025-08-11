@@ -30,10 +30,13 @@ body {
 }
 
 .profile-card {
+    display: flex;
+    flex-direction: column;
     background-color: #111;
     border-radius: 15px;
-    padding: 40px;
+    padding: 20px;
     width: 100%;
+    height: 92vh; /* Ocupa toda la pantalla */
     max-width: 400px;
     text-align: center;
     border: 1px solid var(--gold-color);
@@ -42,14 +45,30 @@ body {
     z-index: 1;
 }
 
+.profile-header {
+    padding: 0.1rem 0.3rem; /* Menos padding */
+    text-align: center;
+    border-bottom: 1px solid var(--gold-color);
+    flex-shrink: 0;
+}
+
+.profile-footer {
+    padding: 0.3rem 0.5rem; /* Menos altura */
+    text-align: center;
+    flex-shrink: 0;
+}
+
 .profile-pic {
-    width: 150px;
-    height: 150px;
+    width: 90px; /* Más pequeño */
+    height: 90px;
     border-radius: 50%;
     border: 4px solid var(--gold-color);
     object-fit: cover;
-    margin-bottom: 20px;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+    transform: scale(1.05);
 }
+
 
 .name {
     font-family: 'Playfair Display', serif;
@@ -63,13 +82,13 @@ body {
     font-size: var(--title-font-size);
     letter-spacing: 3px;
     color: #aaa;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
     text-transform: uppercase;
 }
 
 .cta {
     font-weight: 300;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     font-size: var(--cta-font-size);
     word-wrap: break-word;
 }
@@ -79,6 +98,12 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+}
+
+.announcements-wrapper {
+    flex: 1; /* Ocupa todo el espacio disponible entre header y footer */
+    overflow-y: auto; /* Solo aquí hay scroll */
+    padding: 1rem;
 }
 
 .announcement-link {
@@ -102,7 +127,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    text-align: left;
+    text-align: center;
     position: relative;
     height: 100%;
 }
@@ -115,14 +140,14 @@ body {
     width: 100%;
     max-height: 200px;
     object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 .announcement-footer {
-    margin-top: 15px;
+    margin-top: 5px;
     text-align: center;
-    padding-top: 10px;
+    padding-top: 5px;
     border-top: 1px solid rgba(var(--gold-color-rgb), 0.05);
 }
 
@@ -158,7 +183,8 @@ body {
 }
 
 .social-links {
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -167,6 +193,7 @@ body {
 .social-links a {
     color: var(--light-color);
     font-size: 1.5rem;
+    margin: 0 0.3rem;
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -178,10 +205,11 @@ body {
 
 .website-link {
     display: inline-block;
+    margin-top: 0.3rem;
     background-color: var(--gold-color);
     color: var(--dark-color);
-    padding: 12px 25px;
-    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
     text-decoration: none;
     font-weight: bold;
     transition: background-color 0.3s ease, transform 0.3s ease, filter 0.3s ease;

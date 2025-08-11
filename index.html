@@ -15,23 +15,32 @@
 </head>
 <body>
     <main class="profile-card">
+        <!-- Zona fija superior -->
+        <div class="profile-header">
         <!-- Imagen de perfil por defecto -->
-        <img src="images/default-profile.png" alt="Foto de Roiner Menendez" class="profile-pic" id="profile-pic-img">
+          <img src="images/default-profile.png" alt="Foto de Roiner Menendez" class="profile-pic" id="profile-pic-img">
         
-        <h1 class="name" id="profile-name">Roiner Menendez</h1>
-        <p class="title" id="profile-title">PROSCALPIN 5.0</p>
-
-        <p class="cta" id="profile-cta">Accede a mi sitio web y mira más de mi trabajo</p>
-
-        <div id="announcements-container"></div>
-
-        <div class="social-links" id="social-links-container">
-            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <h1 class="name" id="profile-name">Roiner Menendez</h1>
+          <p class="title" id="profile-title">PROSCALPIN 5.0</p>
+          <p class="cta" id="profile-cta">Accede a mi sitio web y mira más de mi trabajo</p>
         </div>
         
-        <a href="#" class="website-link" id="profile-website">Contacto</a>
+        <!-- Zona con scroll (solo anuncios) -->
+        <div class="announcements-wrapper">
+           <div id="announcements-container">
+           <!-- Aquí se cargan dinámicamente los anuncios -->
+           </div>
+        </div>
+
+        <!-- Zona fija inferior -->
+        <div class="profile-footer">
+           <div class="social-links" id="social-links-container">
+             <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+             <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+             <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+           </div>
+          <a href="#" class="website-link" id="profile-website">Contacto</a>
+        </div>
     </main>
 
     <div id="admin-button" class="admin-button">
