@@ -125,8 +125,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         // Obtener URL pública
-        const { publicURL } = supabase.storage.from('site-images').getPublicUrl(path);
-        return publicURL;
+        const { data } = supabase.storage.from('site-images').getPublicUrl(path);
+        return data.publicUrl; // Aquí está la diferencia
     }
 
     /*********************
@@ -405,8 +405,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderProfile();
 
     /*********************
- *  EVENTOS: UI y Admin
- *********************/
+    *  EVENTOS: UI y Admin
+    *********************/
 // Abrir modal login (email + password)
 elements.adminButton.addEventListener('click', () => {
     elements.passwordError.textContent = '';
