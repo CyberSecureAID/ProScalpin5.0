@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             { icon: 'fab fa-whatsapp', url: '#' },
         ],
         announcements: [],
-        themeColor: '#d4af37',
+        themeColor: '#02ffff',
         fontSizes: {
             name: '2.5',
             title: '1',
