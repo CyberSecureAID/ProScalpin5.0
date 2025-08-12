@@ -715,3 +715,21 @@ elements.saveChangesBtn.addEventListener('click', async () => {
         }
     }
 });
+
+// Billetes cayendo
+const numberOfBills = 20; // cuantos billetes crear
+  const billImage = 'images/billete.png'; // imagen billete ejemplo
+
+  for (let i = 0; i < numberOfBills; i++) {
+    const bill = document.createElement('img');
+    bill.src = billImage;
+    bill.className = 'bill';
+    bill.style.left = Math.random() * window.innerWidth + 'px';
+    bill.style.animationDuration = 3 + Math.random() * 5 + 's';
+    bill.style.animationDelay = (Math.random() * 5) + 's';
+    bill.style.transform = `rotate(${Math.random() * 360}deg)`;
+    document.body.appendChild(bill);
+
+    // Eliminar el billete tras acabar la animación
+    bill.addEventListener('animationend', () => bill.remove());
+  }

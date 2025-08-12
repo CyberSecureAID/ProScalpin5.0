@@ -625,6 +625,23 @@ footer {
     backdrop-filter: blur(2px); /* Slight blur */
 }
 
+ .bill {
+    position: fixed;
+    top: -100px;
+    width: 50px;
+    height: auto;
+    pointer-events: none; /* para que no interfieran con clicks */
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+  }
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
 @media (max-width: 480px) {
     .profile-card {
         padding: 30px 20px;

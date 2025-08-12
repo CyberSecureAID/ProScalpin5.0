@@ -15,11 +15,12 @@ out/
 #######################################
 readme.dm
 .env
-accessControl.js
-supabase.js
+README.md
 app copy.js
 style copy.css
 index copy.html
+billetes.html
+billetes.css
 /ProScalpin5.0 2
 /public
 /txt
