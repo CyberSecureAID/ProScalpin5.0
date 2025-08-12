@@ -717,32 +717,40 @@ elements.saveChangesBtn.addEventListener('click', async () => {
 });
 
 // Billetes cayendo
+let maxDollars = 15; // cantidad máxima de billetes en pantalla
+let currentDollars = 0; // contador de billetes actuales
+
 function createDollar() {
+    if (currentDollars >= maxDollars) return; // no crear más si llegamos al máximo
+
     const dollar = document.createElement('img');
-    dollar.src = 'images/dollar.png'; // tu imagen del billete
+    dollar.src = 'images/dollar.png'; 
     dollar.classList.add('dollar');
 
-    // Tamaño aleatorio (entre 40px y 120px)
+    // Tamaño aleatorio (40px a 120px)
     const size = Math.floor(Math.random() * 80) + 40;
     dollar.style.width = `${size}px`;
 
     // Posición horizontal aleatoria
     dollar.style.left = `${Math.random() * window.innerWidth}px`;
 
-    // Duración aleatoria (más tiempo = más lento)
-    const duration = Math.random() * 5 + 5; // entre 5s y 10s
+    // Duración aleatoria (5s a 10s)
+    const duration = Math.random() * 5 + 5;
     dollar.style.animationDuration = `${duration}s`;
 
-    // Z-index según tamaño (grande delante, pequeño detrás)
+    // Z-index según tamaño
     dollar.style.zIndex = size > 80 ? 999999 : 1;
 
     document.body.appendChild(dollar);
+    currentDollars++;
 
     // Eliminar después de animarse
     setTimeout(() => {
         dollar.remove();
+        currentDollars--;
     }, duration * 1000);
 }
 
-// Crear billetes cada 200ms
-setInterval(createDollar, 200);
+// Intentar crear un billete cada 300ms
+setInterval(createDollar, 300);
+
