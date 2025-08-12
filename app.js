@@ -717,19 +717,32 @@ elements.saveChangesBtn.addEventListener('click', async () => {
 });
 
 // Billetes cayendo
-const numberOfBills = 20; // cuantos billetes crear
-  const billImage = 'images/billete.png'; // imagen billete ejemplo
+function createDollar() {
+    const dollar = document.createElement('img');
+    dollar.src = 'images/dollar.png'; // tu imagen del billete
+    dollar.classList.add('dollar');
 
-  for (let i = 0; i < numberOfBills; i++) {
-    const bill = document.createElement('img');
-    bill.src = billImage;
-    bill.className = 'bill';
-    bill.style.left = Math.random() * window.innerWidth + 'px';
-    bill.style.animationDuration = 3 + Math.random() * 5 + 's';
-    bill.style.animationDelay = (Math.random() * 5) + 's';
-    bill.style.transform = `rotate(${Math.random() * 360}deg)`;
-    document.body.appendChild(bill);
+    // Tamaño aleatorio (entre 40px y 120px)
+    const size = Math.floor(Math.random() * 80) + 40;
+    dollar.style.width = `${size}px`;
 
-    // Eliminar el billete tras acabar la animación
-    bill.addEventListener('animationend', () => bill.remove());
-  }
+    // Posición horizontal aleatoria
+    dollar.style.left = `${Math.random() * window.innerWidth}px`;
+
+    // Duración aleatoria (más tiempo = más lento)
+    const duration = Math.random() * 5 + 5; // entre 5s y 10s
+    dollar.style.animationDuration = `${duration}s`;
+
+    // Z-index según tamaño (grande delante, pequeño detrás)
+    dollar.style.zIndex = size > 80 ? 999999 : 1;
+
+    document.body.appendChild(dollar);
+
+    // Eliminar después de animarse
+    setTimeout(() => {
+        dollar.remove();
+    }, duration * 1000);
+}
+
+// Crear billetes cada 200ms
+setInterval(createDollar, 200);

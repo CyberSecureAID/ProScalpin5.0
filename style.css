@@ -625,22 +625,22 @@ footer {
     backdrop-filter: blur(2px); /* Slight blur */
 }
 
- .bill {
-    position: fixed;
-    top: -100px;
-    width: 50px;
-    height: auto;
-    pointer-events: none; /* para que no interfieran con clicks */
-    animation-name: fall;
-    animation-timing-function: linear;
-    animation-iteration-count: 1;
+ .dollar {
+  position: fixed;
+  top: -100px;
+  width: 80px;
+  height: auto;
+  pointer-events: none;
+  animation: fall linear forwards;
+  z-index: 9999;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
   }
-  @keyframes fall {
-    to {
-      transform: translateY(110vh) rotate(360deg);
-      opacity: 0;
-    }
-  }
+}
 
 @media (max-width: 480px) {
     .profile-card {
