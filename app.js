@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      *  DATOS POR DEFECTO*
      *********************/
     const defaultData = {
-        profilePic: 'images/default-profile.jpg',
+        profilePic: 'images/profiles.jpg',
         name: 'Roiner Menendez',
         title: 'PROSCALPIN 5.0',
         cta: 'Accede a mi sitio web y mira más de mi trabajo',
