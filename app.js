@@ -403,16 +403,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         const starClass = announcement.isPinned ? 'fas fa-star pinned' : 'far fa-star';
 
         item.innerHTML = `
-            <span>${content}</span>
-            <button class="pin-star-btn" data-index="${index}" title="Fijar anuncio arriba"
-                style="border:none; background:none; cursor:pointer; margin-left:10px; font-size:1.2rem; color: ${announcement.isPinned ? '#FFD700' : '#888'};">
-                <i class="${starClass}"></i>
-            </button>
-            <button class="delete-btn" data-index="${index}">Eliminar</button>
+          <span class="managed-item-content">${content}</span>
+            <div class="managed-item-buttons">
+             <button class="pin-star-btn" data-index="${index}" title="Fijar anuncio arriba"
+               style="border:none; background:none; cursor:pointer; font-size:1.2rem; color: ${announcement.isPinned ? '#FFD700' : '#888'};">
+               <i class="${starClass}"></i>
+             </button>
+             <button class="edit-announcement-btn" data-index="${index}">Editar</button>
+             <button class="delete-btn" data-index="${index}">Eliminar</button>
+          </div>
         `;
         elements.announcementsManager.appendChild(item);
     });
-};
+  };
 
     /*********************
      *  INIT: Cargar datos desde Supabase (o localStorage fallback)
@@ -631,6 +634,21 @@ elements.saveChangesBtn.addEventListener('click', async () => {
             return;
         }
 
+        const editIndex = elements.addAnnouncementBtn.dataset.editIndex;
+
+    if (editIndex !== undefined) {
+        // Actualizar anuncio existente
+        const ann = tempData.announcements[editIndex];
+        ann.text = text;
+        ann.linkUrl = linkUrl;
+        if (imageFile) {
+            ann._imageFile = imageFile; // archivo nuevo a subir
+            ann.imageUrl = null;        // se reemplazará cuando guarde
+        }
+        delete elements.addAnnouncementBtn.dataset.editIndex;
+        elements.addAnnouncementBtn.textContent = 'Añadir anuncio';
+    } else {
+
         // Crear objeto de anuncio en tempData; si hay imageFile la guardamos en la propiedad _imageFile
         const announcementObj = {
             id: Date.now(), // id simple (puedes cambiar a uuid si quieres)
@@ -640,12 +658,10 @@ elements.saveChangesBtn.addEventListener('click', async () => {
             likes: Math.floor(Math.random()*100) + 1
         };
 
-        if (imageFile) {
-            // Guarda la referencia al File para subirla cuando el usuario "Guarde cambios"
-            announcementObj._imageFile = imageFile;
-        }
-
+        if (imageFile) announcementObj._imageFile = imageFile;
         tempData.announcements.push(announcementObj);
+    }
+
         renderAnnouncementsManager();
 
         // limpiar inputs y preview
@@ -657,29 +673,53 @@ elements.saveChangesBtn.addEventListener('click', async () => {
 
     elements.announcementsManager.addEventListener('click', (e) => {
     // Manejo del pin con estrella
-    if (e.target.closest('.pin-star-btn')) {
-        const btn = e.target.closest('.pin-star-btn');
-        const idx = parseInt(btn.dataset.index);
+    const pinBtn = e.target.closest('.pin-star-btn');
+    if (pinBtn) {
+        const idx = parseInt(pinBtn.dataset.index, 10);
 
         if (tempData.announcements[idx].isPinned) {
-            // Ya está fijado, así que desfijar todos
+            // Si ya está fijado, desfijar todos
             tempData.announcements.forEach(ann => ann.isPinned = false);
         } else {
-            // Fijar este anuncio y desfijar los demás
+            // Fijar solo este anuncio y desfijar los demás
             tempData.announcements.forEach((ann, i) => {
                 ann.isPinned = (i === idx);
             });
         }
 
         renderAnnouncementsManager();
-        return; // para no continuar a borrar si clickeaste en la estrella
+        return; // evitar que se ejecute el borrado
     }
 
     // Manejo del botón eliminar
     if (e.target.classList.contains('delete-btn')) {
-        const index = parseInt(e.target.dataset.index);
+        const index = parseInt(e.target.dataset.index, 10);
         tempData.announcements.splice(index, 1);
         renderAnnouncementsManager();
+    }
+    // 3️⃣ Manejo del botón editar
+    const editBtn = e.target.closest('.edit-announcement-btn');
+    if (editBtn) {
+        const index = parseInt(editBtn.dataset.index, 10);
+        const ann = tempData.announcements[index];
+
+        // Llenar inputs del formulario
+        elements.announcementInput.value = ann.text || '';
+        elements.announcementLinkInput.value = ann.linkUrl || '';
+
+        // Previsualizar imagen
+        if (ann.imageUrl) {
+            elements.announcementImagePreview.src = ann.imageUrl;
+            elements.announcementImagePreview.style.display = 'block';
+            delete ann._imageFile; // limpiar archivo temporal si lo tenía
+        } else {
+            elements.announcementImagePreview.style.display = 'none';
+            elements.announcementImageUpload.value = '';
+        }
+
+        // Guardamos el índice para actualizar
+        elements.addAnnouncementBtn.dataset.editIndex = index;
+        elements.addAnnouncementBtn.textContent = 'Actualizar Anuncio';
     }
 });
 

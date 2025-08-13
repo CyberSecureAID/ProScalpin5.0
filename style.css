@@ -615,6 +615,16 @@ body {
 .pin-star-btn i.far.fa-star { color: #888; }            /* gris */
 .pin-star-btn:hover i { color: #FFA500; }               /* naranja hover */
 
+.edit-announcement-btn {
+    background: #377dff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
 footer {
     position: fixed;
     bottom: 0;
