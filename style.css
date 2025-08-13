@@ -611,6 +611,16 @@ body {
     font-size: 1.1rem;
 }
 
+.pin-star-btn i.fas.fa-star.pinned {
+    color: #FFD700; /* dorado */
+}
+.pin-star-btn i.far.fa-star {
+    color: #888; /* gris */
+}
+.pin-star-btn:hover i {
+    color: #FFA500; /* naranja al hover */
+}
+
 footer {
     position: fixed;
     bottom: 0;

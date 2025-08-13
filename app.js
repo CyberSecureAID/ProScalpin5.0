@@ -280,52 +280,60 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const renderAnnouncements = () => {
         elements.announcementsContainer.innerHTML = '';
-        (appData.announcements || []).slice().reverse().forEach(announcement => {
-            const announcementCardContent = document.createElement('div');
-            announcementCardContent.className = 'announcement-card-content';
+        // Ordenar anuncios: los fijados (isPinned) primero
+    const sortedAnnouncements = (appData.announcements || []).slice().sort((a, b) => {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return 0;
+    });
 
-            if (announcement.imageUrl) {
-                const img = document.createElement('img');
-                img.src = announcement.imageUrl;
-                img.alt = 'Imagen del anuncio';
-                img.className = 'announcement-image';
-                announcementCardContent.appendChild(img);
-            }
+    // Mostrar anuncios en orden (fijados primero)
+    sortedAnnouncements.forEach(announcement => {
+        const announcementCardContent = document.createElement('div');
+        announcementCardContent.className = 'announcement-card-content';
 
-            if (announcement.text) {
-                const p = document.createElement('p');
-                p.textContent = announcement.text;
-                announcementCardContent.appendChild(p);
-            }
+        if (announcement.imageUrl) {
+            const img = document.createElement('img');
+            img.src = announcement.imageUrl;
+            img.alt = 'Imagen del anuncio';
+            img.className = 'announcement-image';
+            announcementCardContent.appendChild(img);
+        }
 
-            const announcementCard = document.createElement('div');
-            announcementCard.className = 'announcement';
-            if (announcement.id) announcementCard.id = `announcement-${announcement.id}`;
+        if (announcement.text) {
+            const p = document.createElement('p');
+            p.textContent = announcement.text;
+            announcementCardContent.appendChild(p);
+        }
 
-            const announcementFooter = document.createElement('div');
-            announcementFooter.className = 'announcement-footer';
-            announcementFooter.innerHTML = `
-                <span class="likes-container" data-id="${announcement.id}">
-                    <i class="fas fa-heart like-button"></i>
-                    <span class="like-count">${announcement.likes || 0}</span>
-                </span>
-            `;
-            announcementCard.appendChild(announcementCardContent);
-            announcementCard.appendChild(announcementFooter);
+        const announcementCard = document.createElement('div');
+        announcementCard.className = 'announcement';
+        if (announcement.id) announcementCard.id = `announcement-${announcement.id}`;
 
-            if (announcement.linkUrl) {
-                const a = document.createElement('a');
-                a.href = announcement.linkUrl;
-                a.className = 'announcement-link';
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                a.appendChild(announcementCard);
-                elements.announcementsContainer.appendChild(a);
-            } else {
-                elements.announcementsContainer.appendChild(announcementCard);
-            }
-        });
-    };
+        const announcementFooter = document.createElement('div');
+        announcementFooter.className = 'announcement-footer';
+        announcementFooter.innerHTML = `
+            <span class="likes-container" data-id="${announcement.id}">
+                <i class="fas fa-heart like-button"></i>
+                <span class="like-count">${announcement.likes || 0}</span>
+            </span>
+        `;
+        announcementCard.appendChild(announcementCardContent);
+        announcementCard.appendChild(announcementFooter);
+
+        if (announcement.linkUrl) {
+            const a = document.createElement('a');
+            a.href = announcement.linkUrl;
+            a.className = 'announcement-link';
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.appendChild(announcementCard);
+            elements.announcementsContainer.appendChild(a);
+        } else {
+            elements.announcementsContainer.appendChild(announcementCard);
+        }
+    });
+};
 
     const renderProfile = () => {
         applyTheme(appData.themeColor, appData.fontSizes);
@@ -383,20 +391,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     const renderAnnouncementsManager = () => {
-        elements.announcementsManager.innerHTML = '';
-        tempData.announcements.forEach((announcement, index) => {
-            const item = document.createElement('div');
-            item.className = 'managed-item';
-            let content = announcement.text ? `"${announcement.text.substring(0, 30)}..."` : 'Anuncio sin texto';
-            if (announcement.imageUrl || announcement._imageFile) content += ' (imagen)';
-            if (announcement.linkUrl) content += ' (enlace)';
-            item.innerHTML = `
-                <span>${content}</span>
-                <button class="delete-btn" data-index="${index}">Eliminar</button>
-            `;
-            elements.announcementsManager.appendChild(item);
-        });
-    };
+    elements.announcementsManager.innerHTML = '';
+    tempData.announcements.forEach((announcement, index) => {
+        const item = document.createElement('div');
+        item.className = 'managed-item';
+
+        let content = announcement.text ? `"${announcement.text.substring(0, 30)}..."` : 'Anuncio sin texto';
+        if (announcement.imageUrl || announcement._imageFile) content += ' (imagen)';
+        if (announcement.linkUrl) content += ' (enlace)';
+
+        // Estrella para fijar
+        const starClass = announcement.isPinned ? 'fas fa-star pinned' : 'far fa-star';
+
+        item.innerHTML = `
+            <span>${content}</span>
+            <button class="pin-star-btn" data-index="${index}" title="Fijar anuncio arriba" style="border:none; background:none; cursor:pointer; margin-left:10px; font-size: 1.2rem; color: ${announcement.isPinned ? '#FFD700' : '#888'};">
+                <i class="${starClass}"></i>
+            </button>
+            <button class="delete-btn" data-index="${index}">Eliminar</button>
+        `;
+        elements.announcementsManager.appendChild(item);
+    });
+};
 
     /*********************
      *  INIT: Cargar datos desde Supabase (o localStorage fallback)
@@ -640,12 +656,32 @@ elements.saveChangesBtn.addEventListener('click', async () => {
     });
 
     elements.announcementsManager.addEventListener('click', (e) => {
-        if (e.target.classList.contains('delete-btn')) {
-            const index = e.target.dataset.index;
-            tempData.announcements.splice(index, 1);
-            renderAnnouncementsManager();
+    // Manejo del pin con estrella
+    if (e.target.closest('.pin-star-btn')) {
+        const btn = e.target.closest('.pin-star-btn');
+        const idx = parseInt(btn.dataset.index);
+
+        if (tempData.announcements[idx].isPinned) {
+            // Ya está fijado, así que desfijar todos
+            tempData.announcements.forEach(ann => ann.isPinned = false);
+        } else {
+            // Fijar este anuncio y desfijar los demás
+            tempData.announcements.forEach((ann, i) => {
+                ann.isPinned = (i === idx);
+            });
         }
-    });
+
+        renderAnnouncementsManager();
+        return; // para no continuar a borrar si clickeaste en la estrella
+    }
+
+    // Manejo del botón eliminar
+    if (e.target.classList.contains('delete-btn')) {
+        const index = parseInt(e.target.dataset.index);
+        tempData.announcements.splice(index, 1);
+        renderAnnouncementsManager();
+    }
+});
 
     /*********************
      *  Likes (visitas públicas)
