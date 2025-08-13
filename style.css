@@ -644,7 +644,13 @@ footer {
 
 @media (max-width: 480px) {
     .profile-card {
-        padding: 30px 20px;
+        height: auto;              /* deja crecer la tarjeta */
+        max-height: 95vh;         /* pero no más que la pantalla */
+        overflow-y: auto;          /* si es más alta, activa scroll */
+    }
+
+    .announcements-wrapper {
+        max-height: none;          /* sin límites internos */
     }
 
     .profile-pic {
