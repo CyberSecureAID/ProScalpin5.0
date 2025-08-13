@@ -400,12 +400,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (announcement.imageUrl || announcement._imageFile) content += ' (imagen)';
         if (announcement.linkUrl) content += ' (enlace)';
 
-        // Estrella para fijar
         const starClass = announcement.isPinned ? 'fas fa-star pinned' : 'far fa-star';
 
         item.innerHTML = `
             <span>${content}</span>
-            <button class="pin-star-btn" data-index="${index}" title="Fijar anuncio arriba" style="border:none; background:none; cursor:pointer; margin-left:10px; font-size: 1.2rem; color: ${announcement.isPinned ? '#FFD700' : '#888'};">
+            <button class="pin-star-btn" data-index="${index}" title="Fijar anuncio arriba"
+                style="border:none; background:none; cursor:pointer; margin-left:10px; font-size:1.2rem; color: ${announcement.isPinned ? '#FFD700' : '#888'};">
                 <i class="${starClass}"></i>
             </button>
             <button class="delete-btn" data-index="${index}">Eliminar</button>
