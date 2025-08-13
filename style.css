@@ -642,6 +642,35 @@ footer {
   }
 }
 
+/* Tablet */
+@media (max-width: 768px) {
+    .profile-card {
+        height: auto;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+    .announcements-wrapper {
+        max-height: none;
+    }
+
+    .name {
+        font-size: 2rem;
+    }
+
+    .title {
+        font-size: 0.9rem;
+    }
+
+    .cta {
+        font-size: 0.9rem;
+    }
+
+    .profile-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 @media (max-width: 480px) {
     .profile-card {
         height: auto;              /* deja crecer la tarjeta */
