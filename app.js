@@ -233,6 +233,50 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Eliminar archivo de Storage
+    async function deleteFileFromStorage(path) {
+    try {
+        const { error } = await supabase
+            .storage
+            .from('site-images') // nombre del bucket
+            .remove([path]);     // arreglo con la ruta exacta del archivo
+
+        if (error) {
+            console.error("Error eliminando archivo del Storage:", error);
+        } else {
+            console.log("Imagen eliminada del Storage:", path);
+        }
+    } catch (err) {
+        console.error("Error inesperado eliminando imagen:", err);
+    }
+}
+
+// Borra un archivo del Storage de Supabase
+async function deleteFileFromStorage(fileUrl) {
+    try {
+        // Extraer la ruta relativa dentro del bucket a partir del URL público
+        // Ejemplo: 
+        // fileUrl = 'https://<project>.supabase.co/storage/v1/object/public/site-images/announcements/nombre.png'
+        // bucket = 'site-images', path = 'announcements/nombre.png'
+        const baseUrl = 'https://zgclauiomeprznsunxfk.supabase.co/storage/v1/object/public/';
+        if (!fileUrl.startsWith(baseUrl)) return;
+
+        const relativePath = fileUrl.replace(baseUrl + 'site-images/', ''); // 'announcements/nombre.png'
+
+        const { error } = await supabase.storage
+            .from('site-images')
+            .remove([relativePath]);
+
+        if (error) {
+            console.error('Error al eliminar archivo del Storage:', error);
+        } else {
+            console.log('Archivo eliminado del Storage:', relativePath);
+        }
+    } catch (err) {
+        console.error('deleteFileFromStorage error:', err);
+    }
+}
+
     /*********************
      *  RENDER (igual que antes, con ligeras adaptaciones)
      *********************/
@@ -313,10 +357,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const announcementFooter = document.createElement('div');
         announcementFooter.className = 'announcement-footer';
         announcementFooter.innerHTML = `
-            <span class="likes-container" data-id="${announcement.id}">
-                <i class="fas fa-heart like-button"></i>
-                <span class="like-count">${announcement.likes || 0}</span>
-            </span>
+            
         `;
         announcementCard.appendChild(announcementCardContent);
         announcementCard.appendChild(announcementFooter);
@@ -671,7 +712,7 @@ elements.saveChangesBtn.addEventListener('click', async () => {
         elements.announcementImagePreview.style.display = 'none';
     });
 
-    elements.announcementsManager.addEventListener('click', (e) => {
+    elements.announcementsManager.addEventListener('click', async (e) => {
     // Manejo del pin con estrella
     const pinBtn = e.target.closest('.pin-star-btn');
     if (pinBtn) {
@@ -693,11 +734,30 @@ elements.saveChangesBtn.addEventListener('click', async () => {
 
     // Manejo del botón eliminar
     if (e.target.classList.contains('delete-btn')) {
-        const index = parseInt(e.target.dataset.index, 10);
-        tempData.announcements.splice(index, 1);
-        renderAnnouncementsManager();
+    const index = parseInt(e.target.dataset.index);
+    const ann = tempData.announcements[index];
+
+    // 1️⃣ Si el anuncio tiene una imagen, borrarla de Storage
+    if (ann.imageUrl) {
+        // Extraemos la ruta dentro del bucket a partir del URL público
+        const urlParts = ann.imageUrl.split('/site-images/');
+        if (urlParts[1]) {
+            const path = urlParts[1]; // Ej: 'announcements/1690000000000_image.png'
+            deleteFileFromStorage(path);
+        }
     }
-    // 3️⃣ Manejo del botón editar
+
+    // 2️⃣ Eliminar anuncio del array temporal
+    tempData.announcements.splice(index, 1);
+
+    // 3️⃣ Guardar cambios en Supabase
+    await saveToSupabase(tempData);
+
+    // 4️⃣ Refrescar la lista visual de anuncios
+    renderAnnouncementsManager();
+}
+
+    // Manejo del botón editar
     const editBtn = e.target.closest('.edit-announcement-btn');
     if (editBtn) {
         const index = parseInt(editBtn.dataset.index, 10);
