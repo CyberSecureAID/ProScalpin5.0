@@ -357,7 +357,10 @@ async function deleteFileFromStorage(fileUrl) {
         const announcementFooter = document.createElement('div');
         announcementFooter.className = 'announcement-footer';
         announcementFooter.innerHTML = `
-            
+            <span class="likes-container" data-id="${announcement.id}">
+                <i class="fas fa-heart like-button"></i>
+                <span class="like-count">${announcement.likes || 0}</span>
+            </span>
         `;
         announcementCard.appendChild(announcementCardContent);
         announcementCard.appendChild(announcementFooter);

@@ -154,9 +154,9 @@ body {
 .likes-container {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 2px;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 2px 5px;
     border-radius: 20px;
     background-color: rgba(var(--gold-color-rgb), 0.08);
     transition: background-color 0.2s ease;
